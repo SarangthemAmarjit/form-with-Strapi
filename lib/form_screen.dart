@@ -31,14 +31,11 @@ Future<PostData> submitData(
   String password,
 ) async {
   var body = {
-    "data": {
-      "username": username,
-      "email": email,
-    }
+    {"username": username, "email": email, "password": password}
   };
 
   final response = await http.post(
-      Uri.parse('https://herokunew123.herokuapp.com/api/application-forms'),
+      Uri.parse('https://herokunew123.herokuapp.com/api/auth/local/registers'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -48,6 +45,8 @@ Future<PostData> submitData(
 
   if (response.statusCode == 200) {
     print('Successfully Post');
+    log(response.body);
+
     return PostData.fromJson(jsonDecode(response.body));
 
     // If the server did return a 201 CREATED response,
@@ -374,7 +373,7 @@ class _FormScreenState extends State<FormScreen> {
             child: Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Marquee(
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.red,
                 ),
@@ -397,8 +396,8 @@ class _FormScreenState extends State<FormScreen> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 40),
+          const Padding(
+            padding: EdgeInsets.only(top: 40),
             child: Text(
               "APPLICATION FORM",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
@@ -407,7 +406,7 @@ class _FormScreenState extends State<FormScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("POST APPLIED FOR :",
+              const Text("POST APPLIED FOR :",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
               Container(
                   height: 40,
@@ -415,14 +414,14 @@ class _FormScreenState extends State<FormScreen> {
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.black, width: 0.5),
                       borderRadius: BorderRadius.circular(5)),
-                  margin: EdgeInsets.all(16),
+                  margin: const EdgeInsets.all(16),
                   child: DropdownButtonHideUnderline(
                     child: Padding(
                       padding: const EdgeInsets.only(top: 10, bottom: 10),
                       child: DropdownButton<String>(
                         value: itemvalue,
-                        hint: Padding(
-                          padding: const EdgeInsets.only(left: 10),
+                        hint: const Padding(
+                          padding: EdgeInsets.only(left: 10),
                           child: Text("Select Your Post"),
                         ),
                         items: listitem.map((item) {
